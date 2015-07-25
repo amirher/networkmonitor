@@ -9,6 +9,6 @@ setup(
     url='https://github.com/ddyeakley/networkmonitor',
     long_description="README.txt",
     packages=['networkmonitor'],
-    include_package_data=false,
+    include_package_data=False,
     description="Simple Python Network Monitor tool",
 )
