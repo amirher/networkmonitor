@@ -26,6 +26,7 @@ def timer(sc):
 def isOnLine(ip=None):
     output = subprocess.Popen(["ping.exe", "-n", "1", ip],stdout = subprocess.PIPE).communicate()[0]
     if ('unreachable' in output):
+        return False
     else:
         return True
 
