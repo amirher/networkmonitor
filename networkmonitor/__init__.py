@@ -1,1 +1,1 @@
-import autoremote
+import networkmonitor
