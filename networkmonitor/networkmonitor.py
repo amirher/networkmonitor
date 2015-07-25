@@ -29,7 +29,7 @@ def isOnLine(ip=None):
     if is_windows:
         output = subprocess.Popen(["ping", "-n", "1", ip],stdout = subprocess.PIPE).communicate()[0]
     else:
-        output = subprocess.Popen(["ping", "-C", "1", ip],stdout = subprocess.PIPE).communicate()[0]
+        output = subprocess.Popen(["ping", "-c", "1", ip],stdout = subprocess.PIPE).communicate()[0]
     if ('unreachable' in output):
         return False
     else:
