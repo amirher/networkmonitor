@@ -3,7 +3,9 @@ from datetime import datetime, timedelta
 import time
 import sched, time
 import autoremote
+import platform
 
+is_windows = any(platform.win32_ver())
 
 lasthostips = None
 
@@ -24,7 +26,10 @@ def timer(sc):
     sc.enter(5, 1, timer, (sc,))
 
 def isOnLine(ip=None):
-    output = subprocess.Popen(["ping.exe", "-n", "1", ip],stdout = subprocess.PIPE).communicate()[0]
+    if is_windows:
+        output = subprocess.Popen(["ping", "-n", "1", ip],stdout = subprocess.PIPE).communicate()[0]
+    else:
+        output = subprocess.Popen(["ping", "-C", "1", ip],stdout = subprocess.PIPE).communicate()[0]
     if ('unreachable' in output):
         return False
     else:
