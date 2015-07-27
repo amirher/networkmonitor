@@ -1,8 +1,7 @@
+import autoremote
 import subprocess
 from datetime import datetime, timedelta
-import time
 import sched, time
-import autoremote
 import platform
 
 is_windows = any(platform.win32_ver())
@@ -28,12 +27,16 @@ def timer(sc):
 def isOnLine(ip=None):
     if is_windows:
         output = subprocess.Popen(["ping", "-n", "1", ip],stdout = subprocess.PIPE).communicate()[0]
+        if ('received = 0' in output.lower()):
+            return False
+        else:
+            return True
     else:
         output = subprocess.Popen(["ping", "-c", "1", ip],stdout = subprocess.PIPE).communicate()[0]
-    if ('unreachable' in output):
-        return False
-    else:
-        return True
+        if ('unreachable' in output.lower()):
+            return False
+        else:
+            return True
 
 def scanhost():
     global lasthostips
@@ -47,7 +50,7 @@ def scanhost():
         for ip in hostips:
             print(ip + " : " + hostips[ip])
             if hostips[ip] == "Offline":
-                ar = autoremote.AutoRemote(url="http://goo.gl/T8nIJr")   # Connect to AutoRemote server
+                ar = autoremote("[YOUR AUTOREMOTE URL]")   # Connect to AutoRemote server
                 ar.send("notify Warning=:=" + ip + " : " + hostips[ip])			  # Send Message
     else:
         print("No Change!!!")
